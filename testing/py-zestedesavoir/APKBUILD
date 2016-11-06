@@ -1,0 +1,18 @@
+pkgname=py-zestedesavoir
+pkgver=20.3
+pkgrel=0
+pkgdesc="Zeste de Savoir dependencies meta-package"
+url="https://zestedesavoir.com"
+arch="noarch"
+license="GPL"
+depends="python2 py-pysolr py-python-social-auth py-django-crispy-forms py-django-model-utils py-django-munin py-python-memcached py-gitpython py-python-zmarkdown py-easy-thumbnails py-django-recaptcha py-djangorestframework py-djangorestframework-xml py-django-filter py-django-oauth-toolkit py-drf-extensions py-django-rest-swagger py-django-cors-middleware py-dry-rest-permissions py-django-uuslug py-python-slugify py-pygments py-django py-django-haystack py-lxml py-factory-boy py-geoip py-pillow py-watchdog py-sqlparse py-cairo py-cairosvg"
+
+build() {
+	# meta package
+	return 0
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
