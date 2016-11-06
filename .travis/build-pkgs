@@ -14,4 +14,5 @@ sudo sh -c "printf '%s\n' $repos > /etc/apk/repositories"
 sudo apk update
 
 title "Building all abuilds\n"
-buildrepo -ak "$CLONE_DIR" testing
+mkdir -p ~/buildlogs
+buildrepo -ak -l ~/buildlogs "$CLONE_DIR" testing
