@@ -7,7 +7,7 @@ url="https://pypi.python.org/pypi/$_pkgname-$pkgver"
 arch="noarch"
 license="UNKNOWN"
 depends="python2"
-makedepends="python2-dev py2-setuptools"
+makedepends="python2-dev py-setuptools"
 builddir="$srcdir/$_pkgname-$pkgver"
 source="https://pypi.org/packages/source/${pkgname:3:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
 
