@@ -1,0 +1,48 @@
+pkgname=py-gitpython
+_pkgname=GitPython
+pkgver=2.1.0
+pkgrel=0
+pkgdesc="Python Git Library"
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="BSD License"
+depends="py-gitdb2"
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="29b1fcf504d080dc7a5e630957e829d7  GitPython-2.1.0.tar.gz"
+sha256sums="3ebda1e6ff1ef68597e41dcd1b99c2a5ae902f4dc2b22ad3533cc89c32b42aad  GitPython-2.1.0.tar.gz"
+sha512sums="118656fc9ec15883090f1a88d9de65834ef841acb757adcde92bea6de3f504bdb49467307d42c905be83606310431e1d5672af073dd49e730210d648b4045201  GitPython-2.1.0.tar.gz"

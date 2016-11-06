@@ -1,0 +1,48 @@
+pkgname=py-django-oauth-toolkit
+_pkgname=django-oauth-toolkit
+pkgver=0.10.0
+pkgrel=1
+pkgdesc="OAuth2 goodies for Django"
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="BSD"
+depends="py-six py-django-braces py-oauthlib"
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python py-django"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="b9f177804bb98f218f670edf72ecfea3  django-oauth-toolkit-0.10.0.tar.gz"
+sha256sums="22dcf08674a0b7d7fa7e8abd97d9df9884c1222de3f148473d60d2d7e2ed399a  django-oauth-toolkit-0.10.0.tar.gz"
+sha512sums="e1896a9e14b7adbd01ee6270a526a7d96eb3a5488cce9750403461678eac9808a4d39da11d18ad6be533b062676c09d040be8fd9d2e199ab8079465534f3babd  django-oauth-toolkit-0.10.0.tar.gz"

@@ -1,0 +1,48 @@
+pkgname=py-django-filter
+_pkgname=django-filter
+pkgver=0.15.3
+pkgrel=0
+pkgdesc="Django-filter is a reusable Django application for allowing users to filter querysets dynamically."
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="BSD"
+depends=""
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="8cc699c48fe33d9203824663cbc5330a  django-filter-0.15.3.tar.gz"
+sha256sums="f05b45793217424e828bc84a1384dd1fdc57407dc3d77b10502adf09c3e68206  django-filter-0.15.3.tar.gz"
+sha512sums="be16652aca563e98e0a8c8f4adaad396f48593c4fe8574c72f3627baf5f1f8cb2577872e958a003da76e65397890c2d43f69543f4da763385238f7be024e7a94  django-filter-0.15.3.tar.gz"

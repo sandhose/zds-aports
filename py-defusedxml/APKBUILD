@@ -1,12 +1,12 @@
-pkgname=py-pysolr
-_pkgname=pysolr
-pkgver=3.6.0
+pkgname=py-defusedxml
+_pkgname=defusedxml
+pkgver=0.4.1
 pkgrel=0
-pkgdesc="Lightweight python wrapper for Apache Solr."
+pkgdesc="XML bomb protection for Python stdlib modules"
 url="https://pypi.python.org/pypi/$_pkgname-$pkgver"
 arch="noarch"
-license="BSD"
-depends="py-requests"
+license="PSFL"
+depends=""
 makedepends="python2-dev python3-dev"
 subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
 builddir="$srcdir/$_pkgname-$pkgver"
@@ -43,6 +43,6 @@ _py() {
 	$python setup.py install --prefix=/usr --root="$subpkgdir"
 }
 
-md5sums="9ccd0f8450d84a32fee9301aa97de506  pysolr-3.6.0.tar.gz"
-sha256sums="f94292c1002dbbbfaecaad18fec39cc4bff843b459c8851a2234f2799788ac6f  pysolr-3.6.0.tar.gz"
-sha512sums="15d2599bdfe5b364d0c0497f3125945c8a14a61baca6d32bb775d32fac8a8c2bb9ae46e90e4a08ba144e5f6cc83efba7e456ff7ff617c9af34116432bafbac36  pysolr-3.6.0.tar.gz"
+md5sums="230a5eff64f878b392478e30376d673a  defusedxml-0.4.1.tar.gz"
+sha256sums="cd551d5a518b745407635bb85116eb813818ecaf182e773c35b36239fc3f2478  defusedxml-0.4.1.tar.gz"
+sha512sums="78a7a1f3d1eed9d7cda00afaaccf8153c7f616303c53d3918341d75970d532932b04effcfc8b1b8ed88ba6d730cb56400e9e4ecee8aa7d2181c7577f1d535783  defusedxml-0.4.1.tar.gz"

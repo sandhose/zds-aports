@@ -1,0 +1,48 @@
+pkgname=py-django-braces
+_pkgname=django-braces
+pkgver=1.10.0
+pkgrel=0
+pkgdesc="Reusable, generic mixins for Django"
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="BSD"
+depends=""
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="fd7b776b92839adef4b1acea5e48e524  django-braces-1.10.0.tar.gz"
+sha256sums="2f408af031e665c03a7cd3d49450d670424487cc8f22ebd67b2ba7327259aac7  django-braces-1.10.0.tar.gz"
+sha512sums="0d14337d70de7f41ed71937ae5e7f6ae4e984cd98399a470d843eb55b93f01ce1f6b9aa37e8b29bb4453bec5dddad91c307495ce41e5e65c9c7ef9cc43113b62  django-braces-1.10.0.tar.gz"

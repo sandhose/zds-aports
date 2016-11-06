@@ -1,0 +1,48 @@
+pkgname=py-djangorestframework-xml
+_pkgname=djangorestframework-xml
+pkgver=1.3.0
+pkgrel=0
+pkgdesc="XML support for Django REST Framework"
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="BSD"
+depends="py-defusedxml"
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="4bde3f04816ac84fa71cd591b522068c  djangorestframework-xml-1.3.0.tar.gz"
+sha256sums="caea8e446298b7fe1eb9a79306f35554db7531c2e637734d32de3cf99afbdc5a  djangorestframework-xml-1.3.0.tar.gz"
+sha512sums="606af02ae607209d51555e168eb7460007b0946e20b4ada2ecbd853194556a9b47bdfcbbd7ea1bf4ff2f3df0257761999eacbf22e86f00f71568f990ece466ea  djangorestframework-xml-1.3.0.tar.gz"

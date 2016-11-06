@@ -1,0 +1,46 @@
+pkgname=py-django-debug-toolbar
+_pkgname=django-debug-toolbar
+pkgver=1.6
+pkgrel=0
+pkgdesc="A configurable set of panels that display various debug information about the current request/response."
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="BSD"
+depends="py-django py-sqlparse"
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	_py python2
+}
+
+_py3() {
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="4a6bd744e0c92247cb7bbc9fd3575043  django-debug-toolbar-1.6.tar.gz"
+sha256sums="4eddb6fa791c4bfc6aa49e4c073663cd3719fe1c8609501aedf25b8586563e7a  django-debug-toolbar-1.6.tar.gz"
+sha512sums="2a8dcc02f0deb32e006775c12b13df8f36f54bdce74b27b330af0039db38d8d8802bba2ec6bd732d622b67c15de8abf7f3bc6f9207ed40b8dee96077b8ed9857  django-debug-toolbar-1.6.tar.gz"

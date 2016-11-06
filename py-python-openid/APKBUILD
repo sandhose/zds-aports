@@ -1,0 +1,26 @@
+pkgname=py-python-openid
+_pkgname=python-openid
+pkgver=2.2.5
+pkgrel=0
+pkgdesc="OpenID support for servers and consumers."
+url="https://pypi.python.org/pypi/$_pkgname-$pkgver"
+arch="noarch"
+license="UNKNOWN"
+depends="python"
+makedepends="python-dev"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://files.pythonhosted.org/packages/source/${pkgname:3:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+}
+
+package() {
+	cd "$builddir"
+	python2 setup.py install --prefix=/usr --root="$pkgdir"
+}
+
+md5sums="393f48b162ec29c3de9e2973548ea50d  python-openid-2.2.5.tar.gz"
+sha256sums="92c51c3ecec846cbec4aeff11f9ff47303d4a63f93b0e6ac0ec02a091fed70ef  python-openid-2.2.5.tar.gz"
+sha512sums="e1dc649153239ec128c26e55587c909e45bc46ee7c2878b0f1541de135f4d3d299710678d3913bb978dd9a9167fda89bff72705efdd1cfda435290e5dc0dab5a  python-openid-2.2.5.tar.gz"

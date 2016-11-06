@@ -1,13 +1,13 @@
-pkgname=py-pysolr
-_pkgname=pysolr
-pkgver=3.6.0
+pkgname=py-django-munin
+_pkgname=django-munin
+pkgver=0.2.1
 pkgrel=0
-pkgdesc="Lightweight python wrapper for Apache Solr."
+pkgdesc="Munin adaptor for Django"
 url="https://pypi.python.org/pypi/$_pkgname-$pkgver"
 arch="noarch"
 license="BSD"
-depends="py-requests"
-makedepends="python2-dev python3-dev"
+depends=""
+makedepends="py-setuptools"
 subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
 builddir="$srcdir/$_pkgname-$pkgver"
 source="https://files.pythonhosted.org/packages/source/${pkgname:3:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
@@ -43,6 +43,6 @@ _py() {
 	$python setup.py install --prefix=/usr --root="$subpkgdir"
 }
 
-md5sums="9ccd0f8450d84a32fee9301aa97de506  pysolr-3.6.0.tar.gz"
-sha256sums="f94292c1002dbbbfaecaad18fec39cc4bff843b459c8851a2234f2799788ac6f  pysolr-3.6.0.tar.gz"
-sha512sums="15d2599bdfe5b364d0c0497f3125945c8a14a61baca6d32bb775d32fac8a8c2bb9ae46e90e4a08ba144e5f6cc83efba7e456ff7ff617c9af34116432bafbac36  pysolr-3.6.0.tar.gz"
+md5sums="9aea48c9c335ca50af7e3b23d5228af6  django-munin-0.2.1.tar.gz"
+sha256sums="91052d6ba1e55d0b80f70fb430e110ab622f8a651946f34c0507949ebe5157dc  django-munin-0.2.1.tar.gz"
+sha512sums="ed3152f6d55ed82dd544692fafbb37003f489037a6730a7717b2c6e77f1c79d6f776a07cb08bef0d2401e8f51ed230e9b00a6f7f543628ac769f493787873557  django-munin-0.2.1.tar.gz"

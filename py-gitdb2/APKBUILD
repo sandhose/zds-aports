@@ -1,13 +1,13 @@
-pkgname=py-pysolr
-_pkgname=pysolr
-pkgver=3.6.0
+pkgname=py-gitdb2
+_pkgname=gitdb2
+pkgver=2.0.0
 pkgrel=0
-pkgdesc="Lightweight python wrapper for Apache Solr."
+pkgdesc="Git Object Database"
 url="https://pypi.python.org/pypi/$_pkgname-$pkgver"
 arch="noarch"
-license="BSD"
-depends="py-requests"
-makedepends="python2-dev python3-dev"
+license="BSD License"
+depends="py-smmap2"
+makedepends="py-setuptools"
 subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
 builddir="$srcdir/$_pkgname-$pkgver"
 source="https://files.pythonhosted.org/packages/source/${pkgname:3:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
@@ -43,6 +43,6 @@ _py() {
 	$python setup.py install --prefix=/usr --root="$subpkgdir"
 }
 
-md5sums="9ccd0f8450d84a32fee9301aa97de506  pysolr-3.6.0.tar.gz"
-sha256sums="f94292c1002dbbbfaecaad18fec39cc4bff843b459c8851a2234f2799788ac6f  pysolr-3.6.0.tar.gz"
-sha512sums="15d2599bdfe5b364d0c0497f3125945c8a14a61baca6d32bb775d32fac8a8c2bb9ae46e90e4a08ba144e5f6cc83efba7e456ff7ff617c9af34116432bafbac36  pysolr-3.6.0.tar.gz"
+md5sums="78fdc7645665067862e3ba1e02db6884  gitdb2-2.0.0.tar.gz"
+sha256sums="b9f3209b401b8b4da5f94966c9c17650e66b7474ee5cd2dde5d983d1fba3ab66  gitdb2-2.0.0.tar.gz"
+sha512sums="0b01a7ab0a8366e576618682904a175616163f2b4e6ab5621f69e171466bf8409e446889c31f6691c258926220ce08be3493e1445958e41f2cead187d51ab971  gitdb2-2.0.0.tar.gz"

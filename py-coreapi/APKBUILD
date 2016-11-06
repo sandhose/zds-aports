@@ -1,0 +1,48 @@
+pkgname=py-coreapi
+_pkgname=coreapi
+pkgver=2.0.9
+pkgrel=1
+pkgdesc="Python client library for Core API."
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="BSD"
+depends="py-requests py-itypes"
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python py-uritemplate"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="f4b3f42d54b9f7ced920ce92336fdf8f  coreapi-2.0.9.tar.gz"
+sha256sums="8d028fd7d4883ad7832d24c019132f58dcb17033708bc104597ca275504062f8  coreapi-2.0.9.tar.gz"
+sha512sums="ce405fd64cf381f68230298097cc59b90f99700bddf284959887bf9d6daeb33741311f05c512f745f221aa2b471ec3b8ef7a41ca7c3ed0f15c564b1ec32a542b  coreapi-2.0.9.tar.gz"

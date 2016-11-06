@@ -1,0 +1,48 @@
+pkgname=py-openapi-codec
+_pkgname=openapi-codec
+pkgver=1.1.7
+pkgrel=0
+pkgdesc="An OpenAPI codec for Core API."
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="BSD"
+depends="py-coreapi"
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="1f224f9fbac8e4615180439170161cf4  openapi-codec-1.1.7.tar.gz"
+sha256sums="08fb4bfa4279c34c457954f513496a2ef5cf5b7b9bc15a8f381114a44b961567  openapi-codec-1.1.7.tar.gz"
+sha512sums="664a9d0de85b814b4b7e1c206b9588d6974531e33764c16473d52e0ea2587081596948efc2819a4ce83448ce69bc06cc5620deff4ccd0b425e7aaddd35a22f17  openapi-codec-1.1.7.tar.gz"

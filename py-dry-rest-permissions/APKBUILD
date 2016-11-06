@@ -1,0 +1,48 @@
+pkgname=py-dry-rest-permissions
+_pkgname=dry-rest-permissions
+pkgver=0.1.8
+pkgrel=0
+pkgdesc="Rules based permissions for the Django Rest Framework"
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="BSD"
+depends=""
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="089ce695b4c9fee46ac245115e72c6d4  dry-rest-permissions-0.1.8.tar.gz"
+sha256sums="49135689c7e5fe38beeba67f44da129488daf1f380faf7937cf88727ed353e75  dry-rest-permissions-0.1.8.tar.gz"
+sha512sums="2dda14b402bde055f3ab8b064c777593c6c49f44f6a1c127092f28321ee1b7231a4deb173491396ec115be8b20c55d550620ba7363496a0a7f044ba3e2273a9d  dry-rest-permissions-0.1.8.tar.gz"

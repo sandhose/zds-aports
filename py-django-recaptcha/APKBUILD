@@ -1,0 +1,48 @@
+pkgname=py-django-recaptcha
+_pkgname=django-recaptcha
+pkgver=1.1.0
+pkgrel=1
+pkgdesc="Django recaptcha form field/widget app."
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="BSD"
+depends=""
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python py-django"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="430f74857059d7755c654cf826bf8f2d  django-recaptcha-1.1.0.tar.gz"
+sha256sums="10718e6e372f13a16432674f4ffb443c8b4aee2bdb71c1871dcb08dff1520c32  django-recaptcha-1.1.0.tar.gz"
+sha512sums="50bbdc1b08759a33f0d5f4ac2765e76b38c3618c4b9787afffa439d09a3bf6fcb9ddcd4659db087f1ef0569cb679cc7f1cbb6134c429194c587c1202a6bba853  django-recaptcha-1.1.0.tar.gz"

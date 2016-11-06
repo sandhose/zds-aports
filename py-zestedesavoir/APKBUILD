@@ -1,0 +1,26 @@
+pkgname=py-zestedesavoir
+_pkgname=zds-site
+pkgver=20.3-goujon
+pkgrel=0
+pkgdesc="Bleh."
+url="https://zestedesavoir.com"
+arch="noarch"
+license="GPL"
+depends="python2 py-pysolr py-python-social-auth py-django-crispy-forms py-django-model-utils py-django-munin py-python-memcached py-gitpython py-python-zmarkdown py-easy-thumbnails py-django-recaptcha py-djangorestframework py-djangorestframework-xml py-django-filter py-django-oauth-toolkit py-drf-extensions py-django-rest-swagger py-django-cors-middleware py-dry-rest-permissions py-django-uuslug py-python-slugify py-pygments py-django py-django-haystack py-lxml py-factory-boy py-geoip py-pillow py-watchdog"
+makedepends="py-setuptools"
+builddir="$srcdir/$_pkgname-v$pkgver-build"
+source="https://files.pythonhosted.org/packages/source/${pkgname:3:1}/$_pkgname/$_pkgname-$pkgver-build.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+}
+
+package() {
+	cd "$builddir"
+	python2 setup.py install --prefix=/usr --root="$pkgdir"
+}
+
+md5sums="393f48b162ec29c3de9e2973548ea50d  v20.3-goujon.zip"
+sha256sums="92c51c3ecec846cbec4aeff11f9ff47303d4a63f93b0e6ac0ec02a091fed70ef  v20.3-goujon.zip"
+sha512sums="e1dc649153239ec128c26e55587c909e45bc46ee7c2878b0f1541de135f4d3d299710678d3913bb978dd9a9167fda89bff72705efdd1cfda435290e5dc0dab5a  v20.3-goujon.zip"

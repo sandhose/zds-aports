@@ -1,0 +1,48 @@
+pkgname=py-python-zmarkdown
+_pkgname=Python-ZMarkdown
+pkgver=2.6.0
+pkgrel=11
+pkgdesc="A Django slugify application that guarantees uniqueness and handles unicode."
+url="https://github.com/zestedesavoir/Python-ZMarkdown"
+arch="noarch"
+license="BSD"
+depends=""
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver-zds.$pkgrel"
+source="https://github.com/zestedesavoir/Python-ZMarkdown/archive/$pkgver-zds.$pkgrel.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="9e0096fa3f74044b55906316679df396  2.6.0-zds.11.tar.gz"
+sha256sums="63f190db1c6e445e2ae3d26b65b38024a57fac309495bd0d38d5cfafcfdc2273  2.6.0-zds.11.tar.gz"
+sha512sums="8180d6fef34e8f7919c2ff6a3040fa387a25cfd2fa46f4f422d0a7d68e3fc031014a6dd2d93c9b32e798fc718c9464d465795e62e8d4be7da77aa9a80d3527a0  2.6.0-zds.11.tar.gz"

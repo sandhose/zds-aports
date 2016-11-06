@@ -1,13 +1,13 @@
-pkgname=py-pysolr
-_pkgname=pysolr
-pkgver=3.6.0
+pkgname=py-python-social-auth
+_pkgname=python-social-auth
+pkgver=0.2.21
 pkgrel=0
-pkgdesc="Lightweight python wrapper for Apache Solr."
+pkgdesc="Python social authentication made simple."
 url="https://pypi.python.org/pypi/$_pkgname-$pkgver"
 arch="noarch"
 license="BSD"
-depends="py-requests"
-makedepends="python2-dev python3-dev"
+depends="py-requests py-oauthlib py-requests-oauthlib py-six py-jwt"
+makedepends="py-setuptools"
 subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
 builddir="$srcdir/$_pkgname-$pkgver"
 source="https://files.pythonhosted.org/packages/source/${pkgname:3:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
@@ -24,12 +24,12 @@ package() {
 
 _py2() {
 	replaces="$pkgname"
-	depends="${depends//py-/py2-}"
+	depends="${depends//py-/py2-} py-python-openid"
 	_py python2
 }
 
 _py3() {
-	depends="${depends//py-/py3-}"
+	depends="${depends//py-/py3-} py-python3-openid"
 	_py python3
 }
 
@@ -43,6 +43,6 @@ _py() {
 	$python setup.py install --prefix=/usr --root="$subpkgdir"
 }
 
-md5sums="9ccd0f8450d84a32fee9301aa97de506  pysolr-3.6.0.tar.gz"
-sha256sums="f94292c1002dbbbfaecaad18fec39cc4bff843b459c8851a2234f2799788ac6f  pysolr-3.6.0.tar.gz"
-sha512sums="15d2599bdfe5b364d0c0497f3125945c8a14a61baca6d32bb775d32fac8a8c2bb9ae46e90e4a08ba144e5f6cc83efba7e456ff7ff617c9af34116432bafbac36  pysolr-3.6.0.tar.gz"
+md5sums="2bb1857ed7eca771edaa05471b8a3905  python-social-auth-0.2.21.tar.gz"
+sha256sums="c4dd52bf3da4b9c9cfe2b79727d37a2ec6c34b50336fed54aec5811c134d0496  python-social-auth-0.2.21.tar.gz"
+sha512sums="98f4ab62a221525dc297aa0cb922374939fc0df8765be30656f41ccc1e64a879fd9ffc53c368655c8bd33020b52ebf9c7f7b60bf72c294561f3354bf4ae762a7  python-social-auth-0.2.21.tar.gz"

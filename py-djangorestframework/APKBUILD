@@ -1,0 +1,48 @@
+pkgname=py-djangorestframework
+_pkgname=djangorestframework
+pkgver=3.5.2
+pkgrel=0
+pkgdesc="Web APIs for Django, made easy."
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="BSD"
+depends=""
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="b4528ef473a7f9a7dd1bfb5ebd905d5d  djangorestframework-3.5.2.tar.gz"
+sha256sums="2c5a0bf815394aba0db65b8b83a63751c5ab1df4f52b8e291a6aec773ff24d48  djangorestframework-3.5.2.tar.gz"
+sha512sums="d42fe008a3af0da516d935cd46f2c9cfef77cd602f113a17108794640f5a51dd463ecd6d01d28f8f360d6fcf21f2ee8e9c8260e8cfb9b4a7a4bd1e97d2c4da81  djangorestframework-3.5.2.tar.gz"

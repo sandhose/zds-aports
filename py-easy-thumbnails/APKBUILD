@@ -1,0 +1,46 @@
+pkgname=py-easy-thumbnails
+_pkgname=easy-thumbnails
+pkgver=2.3
+pkgrel=1
+pkgdesc="Easy thumbnails for Django"
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="BSD"
+depends="py-django py-pillow"
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	_py python2
+}
+
+_py3() {
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="279ef0e28d91e51f8adeb6af02a9f001  easy-thumbnails-2.3.tar.gz"
+sha256sums="5ae57f086026dbfe4aa59e9bc80bcae1ae6daca63dec02a2d510c3ab098f0de2  easy-thumbnails-2.3.tar.gz"
+sha512sums="0e469ea907eb0b626660f2087a81055c651a9cb59b6511fcfa54dac014c4a8701c63f408f4b5e1a03552a048e194e9660f8b3a7cea24f6824fda42137cce8a70  easy-thumbnails-2.3.tar.gz"

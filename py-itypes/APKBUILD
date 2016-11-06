@@ -1,0 +1,48 @@
+pkgname=py-itypes
+_pkgname=itypes
+pkgver=1.1.0
+pkgrel=0
+pkgdesc="Simple immutable types for python."
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="BSD"
+depends=""
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="60d764e2512a1c54819a4b910d22857c  itypes-1.1.0.tar.gz"
+sha256sums="c6e77bb9fd68a4bfeb9d958fea421802282451a25bac4913ec94db82a899c073  itypes-1.1.0.tar.gz"
+sha512sums="fbaf82a82e0685f54eb98bdea722cf9fa230881d1940e2a74306972eb9f99958cb0cc62b858c340b649e092262793b83dcf76d11d36d04755ecf05e7a2c77d81  itypes-1.1.0.tar.gz"

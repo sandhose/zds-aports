@@ -1,0 +1,48 @@
+pkgname=py-django-rest-swagger
+_pkgname=django-rest-swagger
+pkgver=2.1.0
+pkgrel=0
+pkgdesc="Swagger UI for Django REST Framework 3.4+"
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="FreeBSD License"
+depends=""
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="280ae246970ac131105f52671b6f9ed8  django-rest-swagger-2.1.0.tar.gz"
+sha256sums="c05a0764c733407cf23b30471dc5c59a4a8e51ee0c5ee505d9ce0e2c327be2e3  django-rest-swagger-2.1.0.tar.gz"
+sha512sums="ba377bf93400c7239a0e86142dbae07fe349d2708a220f2d889bfc3d7c5e9ca5221c57febf00d936a5f61161d3e6bba884aead967c458d77a75b63b210fdd20f  django-rest-swagger-2.1.0.tar.gz"

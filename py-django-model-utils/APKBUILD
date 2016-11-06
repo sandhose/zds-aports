@@ -1,13 +1,13 @@
-pkgname=py-pysolr
-_pkgname=pysolr
-pkgver=3.6.0
-pkgrel=0
-pkgdesc="Lightweight python wrapper for Apache Solr."
+pkgname=py-django-model-utils
+_pkgname=django-model-utils
+pkgver=2.6
+pkgrel=1
+pkgdesc="Django model mixins and utilities"
 url="https://pypi.python.org/pypi/$_pkgname-$pkgver"
 arch="noarch"
 license="BSD"
-depends="py-requests"
-makedepends="python2-dev python3-dev"
+depends=""
+makedepends="py-setuptools"
 subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
 builddir="$srcdir/$_pkgname-$pkgver"
 source="https://files.pythonhosted.org/packages/source/${pkgname:3:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
@@ -36,13 +36,13 @@ _py3() {
 _py() {
 	local python="$1"
 	pkgdesc="$pkgdesc (for $python)"
-	depends="$depends $python"
+	depends="$depends $python py-django"
 	install_if="$pkgname=$pkgver-r$pkgrel $python"
 
 	cd "$builddir"
 	$python setup.py install --prefix=/usr --root="$subpkgdir"
 }
 
-md5sums="9ccd0f8450d84a32fee9301aa97de506  pysolr-3.6.0.tar.gz"
-sha256sums="f94292c1002dbbbfaecaad18fec39cc4bff843b459c8851a2234f2799788ac6f  pysolr-3.6.0.tar.gz"
-sha512sums="15d2599bdfe5b364d0c0497f3125945c8a14a61baca6d32bb775d32fac8a8c2bb9ae46e90e4a08ba144e5f6cc83efba7e456ff7ff617c9af34116432bafbac36  pysolr-3.6.0.tar.gz"
+md5sums="b3a80cea6dca853ff42cd9547954b1f2  django-model-utils-2.6.tar.gz"
+sha256sums="1587729b129b3b0802c80243312cd9dfd90aa3cee290f7335ea4c2e429488f61  django-model-utils-2.6.tar.gz"
+sha512sums="b3983ab084902d740344581a666f7ea54cd366445e193fa5d80b1d923075e139fef5283e5c2c534219c7c0fa1e4902e999e54da0e28ec8cdae47cf0ca3b3f46d  django-model-utils-2.6.tar.gz"

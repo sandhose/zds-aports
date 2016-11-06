@@ -1,0 +1,48 @@
+pkgname=py-drf-extensions
+_pkgname=drf-extensions
+pkgver=0.3.1
+pkgrel=0
+pkgdesc="Extensions for Django REST Framework"
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="BSD"
+depends="py-djangorestframework"
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="c590a1096108469f31e683f216f61ffe  drf-extensions-0.3.1.tar.gz"
+sha256sums="d77eb60e87a70812fd8080fb3b43ce07c3ca5874f6bfb8a142fb5327b0213723  drf-extensions-0.3.1.tar.gz"
+sha512sums="1f1967d70ebec99921e89cf0720d8363e6e5ae87b0d340e81735621bc43d6c028100130fd8aaf45579a32774b3efba2b9becdb20fc552c14548e67aec3974cf8  drf-extensions-0.3.1.tar.gz"

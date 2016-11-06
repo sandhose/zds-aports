@@ -1,0 +1,48 @@
+pkgname=py-unidecode
+_pkgname=Unidecode
+pkgver=0.04.19
+pkgrel=0
+pkgdesc="ASCII transliterations of Unicode text"
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="GPL"
+depends=""
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="9b3ab9bfe5a58124609840f0c2accfe4  Unidecode-0.04.19.tar.gz"
+sha256sums="51477646a9169469e37e791b13ae65fcc75b7f7f570d0d3e514d077805c02e1e  Unidecode-0.04.19.tar.gz"
+sha512sums="a7be95ab22dcc61925da5abb2288cf947e96c61926cd384222451f65947be13d3f5d28bcc4e06f636bebc3dfae01716d455036e15ddb3199f52ca542997f74a1  Unidecode-0.04.19.tar.gz"

@@ -1,0 +1,48 @@
+pkgname=py-python-slugify
+_pkgname=python-slugify
+pkgver=1.2.1
+pkgrel=0
+pkgdesc="A Python Slugify application that handles Unicode"
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="MIT"
+depends="py-unidecode"
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="d03f049eb3df005677ba295de0f8424d  python-slugify-1.2.1.tar.gz"
+sha256sums="501182ec738cc8b743ae5c76c183f4427187ef016257f062b3fa594f60916e34  python-slugify-1.2.1.tar.gz"
+sha512sums="433a44d445c071fa569e709ea481f04dc065a1e8b0f4b7ab8af19017812cbe889b185e3622995ff6deed2e1f5e09ed3d052bcd47e519dcdc441ac37a39c726f0  python-slugify-1.2.1.tar.gz"

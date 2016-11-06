@@ -1,0 +1,48 @@
+pkgname=py-django-uuslug
+_pkgname=django-uuslug
+pkgver=1.1.8
+pkgrel=0
+pkgdesc="A Django slugify application that guarantees uniqueness and handles unicode."
+url="https://pypi.python.org/pypi/$_pkgname/$pkgver"
+arch="noarch"
+license="BSD"
+depends="py-python-slugify"
+makedepends="py-setuptools"
+subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://pypi.org/packages/source/${pkgname:3:1}/${pkgname:3}/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python2 setup.py build || return 1
+	python3 setup.py build || return 1
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+_py2() {
+	replaces="$pkgname"
+	depends="${depends//py-/py2-}"
+	_py python2
+}
+
+_py3() {
+	depends="${depends//py-/py3-}"
+	_py python3
+}
+
+_py() {
+	local python="$1"
+	pkgdesc="$pkgdesc (for $python)"
+	depends="$depends $python"
+	install_if="$pkgname=$pkgver-r$pkgrel $python"
+
+	cd "$builddir"
+	$python setup.py install --prefix=/usr --root="$subpkgdir"
+}
+
+md5sums="fd38869bf0179b07f7293c67cdb9faf6  django-uuslug-1.1.8.tar.gz"
+sha256sums="beeb8384117aeb250205ce8d28e945833d2c5f2775ffa645879bfd5fd37824c4  django-uuslug-1.1.8.tar.gz"
+sha512sums="37da22955108bce8919758d7397cf4f9f6dc782055768fbcfb3e4b88f1c0e770e13812dcb4ef5a9915c5b17eff76b5519749549f7a90e0f1418c3ddba76570e0  django-uuslug-1.1.8.tar.gz"

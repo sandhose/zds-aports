@@ -1,0 +1,26 @@
+pkgname=py-python3-openid
+_pkgname=python3-openid
+pkgver=3.0.10
+pkgrel=0
+pkgdesc="OpenID support for modern servers and consumers."
+url="https://pypi.python.org/pypi/$_pkgname-$pkgver"
+arch="noarch"
+license="UNKNOWN"
+depends="py3-defusedxml python3"
+makedepends="python3-dev"
+builddir="$srcdir/$_pkgname-$pkgver"
+source="https://files.pythonhosted.org/packages/source/${pkgname:3:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
+
+build() {
+	cd "$builddir"
+	python3 setup.py build || return 1
+}
+
+package() {
+	cd "$builddir"
+	python3 setup.py install --prefix=/usr --root="$pkgdir"
+}
+
+md5sums="2089420e0a0c2eb057a2954051ddd326  python3-openid-3.0.10.tar.gz"
+sha256sums="a89c86d10180ada1945e8aa8d92ab95d0a4f3059b7c872e520d661e6dd8076f4  python3-openid-3.0.10.tar.gz"
+sha512sums="679aa0fba40794e85a806f18ca904e9e4336c8fe1c1c558d4f0b66c14cf1959436c7d9225b6bfbaefd1ddb89d645901308fd30d57841ce7cd3c90c24d41c79b3  python3-openid-3.0.10.tar.gz"

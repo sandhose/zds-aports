@@ -1,13 +1,13 @@
-pkgname=py-pysolr
-_pkgname=pysolr
-pkgver=3.6.0
+pkgname=py-django-crispy-forms
+_pkgname=django-crispy-forms
+pkgver=1.6.1
 pkgrel=0
-pkgdesc="Lightweight python wrapper for Apache Solr."
+pkgdesc="Best way to have Django DRY forms"
 url="https://pypi.python.org/pypi/$_pkgname-$pkgver"
 arch="noarch"
-license="BSD"
-depends="py-requests"
-makedepends="python2-dev python3-dev"
+license="MIT"
+depends=""
+makedepends="py-setuptools"
 subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
 builddir="$srcdir/$_pkgname-$pkgver"
 source="https://files.pythonhosted.org/packages/source/${pkgname:3:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
@@ -43,6 +43,6 @@ _py() {
 	$python setup.py install --prefix=/usr --root="$subpkgdir"
 }
 
-md5sums="9ccd0f8450d84a32fee9301aa97de506  pysolr-3.6.0.tar.gz"
-sha256sums="f94292c1002dbbbfaecaad18fec39cc4bff843b459c8851a2234f2799788ac6f  pysolr-3.6.0.tar.gz"
-sha512sums="15d2599bdfe5b364d0c0497f3125945c8a14a61baca6d32bb775d32fac8a8c2bb9ae46e90e4a08ba144e5f6cc83efba7e456ff7ff617c9af34116432bafbac36  pysolr-3.6.0.tar.gz"
+md5sums="84f6ceb0ecfac6ad049ec4cf35b24ee9  django-crispy-forms-1.6.1.tar.gz"
+sha256sums="c894f3a44e111ae6c6226c67741d96d120adb942de41dc8b2a991b87de7ff9c0  django-crispy-forms-1.6.1.tar.gz"
+sha512sums="a2731a4db6f13b22ad536af28dc661c612399a78df8e50cbce9fbeb7b10153bff10d699a94fce6c8eb68c8cc0e4422eb9f9cb681afebee1979fc9e818b82737b  django-crispy-forms-1.6.1.tar.gz"

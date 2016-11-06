@@ -1,13 +1,13 @@
-pkgname=py-pysolr
-_pkgname=pysolr
-pkgver=3.6.0
+pkgname=py-python-memcached
+_pkgname=python-memcached
+pkgver=1.58
 pkgrel=0
-pkgdesc="Lightweight python wrapper for Apache Solr."
+pkgdesc="Pure python memcached client"
 url="https://pypi.python.org/pypi/$_pkgname-$pkgver"
 arch="noarch"
-license="BSD"
-depends="py-requests"
-makedepends="python2-dev python3-dev"
+license="UNKNOWN"
+depends="py-six"
+makedepends="py-setuptools"
 subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
 builddir="$srcdir/$_pkgname-$pkgver"
 source="https://files.pythonhosted.org/packages/source/${pkgname:3:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
@@ -43,6 +43,6 @@ _py() {
 	$python setup.py install --prefix=/usr --root="$subpkgdir"
 }
 
-md5sums="9ccd0f8450d84a32fee9301aa97de506  pysolr-3.6.0.tar.gz"
-sha256sums="f94292c1002dbbbfaecaad18fec39cc4bff843b459c8851a2234f2799788ac6f  pysolr-3.6.0.tar.gz"
-sha512sums="15d2599bdfe5b364d0c0497f3125945c8a14a61baca6d32bb775d32fac8a8c2bb9ae46e90e4a08ba144e5f6cc83efba7e456ff7ff617c9af34116432bafbac36  pysolr-3.6.0.tar.gz"
+md5sums="23b258105013d14d899828d334e6b044  python-memcached-1.58.tar.gz"
+sha256sums="2775829cb54b9e4c5b3bbd8028680f0c0ab695db154b9c46f0f074ff97540eb6  python-memcached-1.58.tar.gz"
+sha512sums="48f933f095751b476c122473fa1d9767cfe5c6c339a9ba71825a50cec23cbfc7b6493716458bfb1f2451c634c517519152105a2000be66bd0d389f94ea312138  python-memcached-1.58.tar.gz"
