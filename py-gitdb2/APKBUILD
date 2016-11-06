@@ -7,10 +7,10 @@ url="https://pypi.python.org/pypi/$_pkgname-$pkgver"
 arch="noarch"
 license="BSD License"
 depends="py-smmap2"
-makedepends="py-setuptools"
+makedepends="python2-dev python3-dev py-setuptools"
 subpackages="py2-${pkgname#py-}:_py2 py3-${pkgname#py-}:_py3"
 builddir="$srcdir/$_pkgname-$pkgver"
-source="https://files.pythonhosted.org/packages/source/${pkgname:3:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
+source="https://pypi.org/packages/source/${pkgname:3:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
 
 build() {
 	cd "$builddir"

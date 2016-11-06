@@ -6,10 +6,10 @@ pkgdesc="OpenID support for servers and consumers."
 url="https://pypi.python.org/pypi/$_pkgname-$pkgver"
 arch="noarch"
 license="UNKNOWN"
-depends="python"
-makedepends="python-dev"
+depends="python2"
+makedepends="python2-dev py2-setuptools"
 builddir="$srcdir/$_pkgname-$pkgver"
-source="https://files.pythonhosted.org/packages/source/${pkgname:3:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
+source="https://pypi.org/packages/source/${pkgname:3:1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
 
 build() {
 	cd "$builddir"
